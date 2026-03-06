@@ -4,7 +4,7 @@
 
 ```bash
 cd contracts
-sh scripts/base-testnet/deployment/deploymentScript_Contract_via_basescan.sh
+sh scripts/base-testnet/deployment/deploymentScript_WorldIDVerifier_via_basescan.sh
 ```
 
 <br>
@@ -13,5 +13,5 @@ sh scripts/base-testnet/deployment/deploymentScript_Contract_via_basescan.sh
 
 ```bash
 cd contracts
-sh scripts/base-testnet/verification/verificationScript_Contract_via_basescan.sh
+sh scripts/base-testnet/verification/verificationScript_WorldIDVerifier_via_basescan.sh
 ```

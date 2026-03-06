@@ -5,8 +5,8 @@ echo "Load the environment variables from the .env file..."
 #source .env
 . ./.env
 
-echo "Deploying & Verifying the Contract on BASE Testnet (via BaseScan)..."
-forge script scripts/base-testnet/deployment/DeploymentForContract_basescan.s.sol \
+echo "Deploying & Verifying the WorldIDVerifier contract on BASE Testnet (via BaseScan)..."
+forge script scripts/base-testnet/deployment/DeploymentForWorldIDVerifier_basescan.s.sol \
     --slow \
     --multi \
     --broadcast \

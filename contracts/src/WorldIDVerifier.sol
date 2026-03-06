@@ -4,7 +4,11 @@ pragma solidity ^0.8.13;
 import { ByteHasher } from './helpers/ByteHasher.sol';
 import { IWorldID } from './interfaces/IWorldID.sol';
 
-contract Contract {
+/**
+ * @title WorldIDVerifier
+ * @notice This contract verifies user identities using the World ID protocol.
+ */
+contract WorldIDVerifier {
 	using ByteHasher for bytes;
 
 	///////////////////////////////////////////////////////////////////////////////
