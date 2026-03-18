@@ -94,7 +94,9 @@ contract WorldIDV3BadgeManager {
      */
     function hasWorldIdV3Badge(address walletAddress) external view returns (bool _hasWorldIdV3Badge) {
         uint256 nullifierHash = nullifierHashesWithWalletAddresses[walletAddress];
-        if (nullifierHash != 0) {
+        bool isNullifierStored = nullifierHashes[nullifierHash];
+        
+        if (nullifierHash != 0 && isNullifierStored == true) {
             return true;
         } else {
             return false;
