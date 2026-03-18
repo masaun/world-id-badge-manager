@@ -44,3 +44,7 @@ cache/
 out/
 broadcast
 contracts/lib/*
+
+# Others
+.vscode
+.github
