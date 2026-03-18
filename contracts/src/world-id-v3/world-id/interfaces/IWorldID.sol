@@ -1,6 +1,9 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
+/**
+ * @title - IWorldID interface (for WorldID V3) 
+ */
 interface IWorldID {
 	/// @notice Reverts if the zero-knowledge proof is invalid.
 	/// @param root The of the Merkle tree
