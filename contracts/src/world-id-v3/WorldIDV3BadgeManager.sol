@@ -30,7 +30,7 @@ contract WorldIDV3BadgeManager {
      * @param externalNullifierHash A keccak256 hash of the external nullifier
      * @param proof The zero-knowledge proof
      */
-    function verifyWorldIdV3ProofAndStoreIntoOnChainStorage(
+    function verifyWorldIDV3ProofAndStoreIntoOnChainStorage(
         uint256 root,
         uint256 signalHash,
         uint256 nullifierHash,
@@ -66,7 +66,7 @@ contract WorldIDV3BadgeManager {
      * @param externalNullifierHash A keccak256 hash of the external nullifier
      * @param proof The zero-knowledge proof
      */
-    function verifyWorldIdV3Proof(
+    function verifyWorldIDV3Proof(
         uint256 root,
         uint256 signalHash,
         uint256 nullifierHash,
@@ -92,7 +92,7 @@ contract WorldIDV3BadgeManager {
      * @param walletAddress The address to check
      * @return _hasWorldIdV3Badge True if the address has World ID V3 Badge, false otherwise
      */
-    function hasWorldIdV3Badge(address walletAddress) external view returns (bool _hasWorldIdV3Badge) {
+    function hasWorldIDV3Badge(address walletAddress) external view returns (bool _hasWorldIdV3Badge) {
         uint256 nullifierHash = nullifierHashesWithWalletAddresses[walletAddress];
         bool isNullifierStored = nullifierHashes[nullifierHash];
         

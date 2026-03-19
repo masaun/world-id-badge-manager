@@ -1,4 +1,12 @@
-# World ID On-Chain Verifier contract
+# World ID v3 Badge Manager contract
+
+## SC `Deployment` Script on `World Chain - Sepolia Testnet`
+```bash
+cd contracts
+sh scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManager.sh
+```
+
+<br>
 
 ## SC `Deployment` Script on `BASE Testnet`
 
