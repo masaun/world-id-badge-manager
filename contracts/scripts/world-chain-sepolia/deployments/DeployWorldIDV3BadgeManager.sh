@@ -123,7 +123,6 @@ else
           --broadcast \
           --verify \
           --etherscan-api-key "$WORLD_CHAIN_SCAN_API_KEY" \
-          --verifier-url https://api-sepolia.worldchain.scan.io/api
     else
         echo "Verification disabled (no WORLD_CHAIN_SCAN_API_KEY)"
         forge script scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManager.s.sol:DeployWorldIDV3BadgeManager \
