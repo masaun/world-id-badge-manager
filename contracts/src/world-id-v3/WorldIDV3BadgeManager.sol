@@ -12,6 +12,7 @@ contract WorldIDV3BadgeManager {
     uint256 public constant GROUP_ID = 1; // Orb
     
     mapping(uint256 => bool) public nullifierHashes;
+    mapping (address => uint256) public nullifierHashesWithWalletAddresses;
     
     error InvalidNullifier();
 
@@ -29,7 +30,7 @@ contract WorldIDV3BadgeManager {
      * @param externalNullifierHash A keccak256 hash of the external nullifier
      * @param proof The zero-knowledge proof
      */
-    function verifyWorldIdV3ProofAndStoreIntoOnChainStorage(
+    function verifyWorldIDV3ProofAndStoreIntoOnChainStorage(
         uint256 root,
         uint256 signalHash,
         uint256 nullifierHash,
@@ -48,9 +49,11 @@ contract WorldIDV3BadgeManager {
             proof
         );
 
+        // @dev - Store the nullifier hash into the on-chain storage to prevent double-signaling.
         nullifierHashes[nullifierHash] = true;
 
-        // Execute protected business logic here.
+        // @dev - Store the nullifier hash with the wallet address into the on-chain storage for later use (e.g., checking if a wallet address has World ID V3 Badge).
+        nullifierHashesWithWalletAddresses[msg.sender] = nullifierHash;
     }
 
     /*
@@ -63,7 +66,7 @@ contract WorldIDV3BadgeManager {
      * @param externalNullifierHash A keccak256 hash of the external nullifier
      * @param proof The zero-knowledge proof
      */
-    function verifyWorldIdV3Proof(
+    function verifyWorldIDV3Proof(
         uint256 root,
         uint256 signalHash,
         uint256 nullifierHash,
@@ -80,4 +83,24 @@ contract WorldIDV3BadgeManager {
             proof
         );
     }
+
+    /*
+     * @notice Check if a wallet address has World ID V3 Badge
+     * @dev - This function checks the following conditions:
+     *        - If the nullifierHash is stored in the nullifierHashesWithWalletAddresses storage for the wallet address, it returns true, indicating that the user has the World ID V3 Badge.  
+     *        - If the nullifierHash is not stored in the nullifierHashesWithWalletAddresses storage for the wallet address, it returns false, indicating that the user has not the World ID V3 Badge.  
+     * @param walletAddress The address to check
+     * @return _hasWorldIdV3Badge True if the address has World ID V3 Badge, false otherwise
+     */
+    function hasWorldIDV3Badge(address walletAddress) external view returns (bool _hasWorldIdV3Badge) {
+        uint256 nullifierHash = nullifierHashesWithWalletAddresses[walletAddress];
+        bool isNullifierStored = nullifierHashes[nullifierHash];
+        
+        if (nullifierHash != 0 && isNullifierStored == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
