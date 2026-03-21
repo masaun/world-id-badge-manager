@@ -16,7 +16,7 @@ contract DeployWorldIDV3BadgeManager is Script {
         uint256 deployerPrivateKey = vm.envUint("WORLD_CHAIN_SEPOLIA_PRIVATE_KEY");
         
         // Get the World ID router address on World Chain Sepolia from the .env file
-        address worldIdRouterAddress = vm.envAddress("WORLD_ID_ROUTER_ON_WORLD_CHAIN_SEPOLIA");
+        address worldIdRouterAddress = vm.envAddress("WORLD_ID_ROUTER_ON_WORLD_CHAIN_SEPOLIA");        
         IWorldID worldIdRouter = IWorldID(worldIdRouterAddress);
         
         vm.startBroadcast(deployerPrivateKey);
