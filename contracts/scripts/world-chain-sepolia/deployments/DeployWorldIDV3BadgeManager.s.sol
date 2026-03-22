@@ -20,14 +20,15 @@ contract DeployWorldIDV3BadgeManager is Script {
         IWorldID worldIdRouter = IWorldID(worldIdRouterAddress);
         
         // Get the app_id and action_id of World ID (https://developer.worldcoin.org)
-        string memory appId = vm.envString("WORLDCOIN_APP_ID");   
-        string memory actionId = vm.envString("WORLDCOIN_ACTION_ID");
+        //string memory appId = vm.envString("WORLDCOIN_APP_ID");   
+        //string memory actionId = vm.envString("WORLDCOIN_ACTION_ID");
 
         vm.startBroadcast(deployerPrivateKey);
 
         // Step 1: Deploy the WorldIDV3BadgeManager contract
         console.log("Deploying the WorldIDV3BadgeManager...");
-        WorldIDV3BadgeManager worldIDV3BadgeManager = new WorldIDV3BadgeManager(worldIdRouter, appId, actionId);
+        WorldIDV3BadgeManager worldIDV3BadgeManager = new WorldIDV3BadgeManager(worldIdRouter);
+        //WorldIDV3BadgeManager worldIDV3BadgeManager = new WorldIDV3BadgeManager(worldIdRouter, appId, actionId);
         console.log("WorldIDV3BadgeManager deployed at:", address(worldIDV3BadgeManager));
 
         vm.stopBroadcast();

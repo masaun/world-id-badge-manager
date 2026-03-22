@@ -15,8 +15,8 @@ contract WorldIDV3BadgeManager {
     uint256 public constant GROUP_ID = 1; // Orb
 
 	/// @dev - The contract's external nullifier hash
-	bytes internal externalNullifier;
-    uint256 internal externalNullifierHash;
+	//bytes internal externalNullifier;
+    //uint256 internal externalNullifierHash;
     
     mapping(uint256 => bool) public nullifierHashes;
     mapping(address => uint256) public nullifierHashesWithWalletAddresses;
@@ -33,10 +33,25 @@ contract WorldIDV3BadgeManager {
 	 * @param _appId - The World ID's app ID
 	 * @param _actionId - The World ID's action ID
      */
-    constructor(IWorldID _worldIdRouter, string memory _appId, string memory _actionId) {
+    constructor(
+        IWorldID _worldIdRouter
+        //string memory _appId, 
+        //string memory _actionId
+    ) {
         worldIdRouter = _worldIdRouter;
-        externalNullifier = abi.encodePacked(abi.encodePacked(_appId).hashToField(), _actionId);
-        externalNullifierHash = externalNullifier.hashToField();
+        //externalNullifier = abi.encodePacked(abi.encodePacked(_appId).hashToField(), _actionId);
+        //externalNullifierHash = externalNullifier.hashToField();
+    }
+
+    /*
+     * @notice - Compute the externalNullifierHash
+     */
+    function _computeExternalNullifierHash(
+        string memory _appId, 
+        string memory _actionId
+    ) internal view returns (uint256 _externalNullifierHash) {
+        bytes memory externalNullifier = abi.encodePacked(abi.encodePacked(_appId).hashToField(), _actionId);
+        uint256 externalNullifierHash = externalNullifier.hashToField();
     }
 
     /*
@@ -48,6 +63,8 @@ contract WorldIDV3BadgeManager {
      * @param proof - The zero-knowledge proof that demonstrates the claimer is registered with World ID (returned by the IDKit widget).
      */
     function verifyWorldIDV3ProofAndStoreIntoOnChainStorage(
+        string memory appId,
+        string memory actionId,
         uint256 root,
         uint256 signalHash,
         uint256 nullifierHash,
@@ -55,6 +72,9 @@ contract WorldIDV3BadgeManager {
         uint256[8] calldata proof
     ) external {
         if (nullifierHashes[nullifierHash]) revert InvalidNullifier();
+
+        // @dev - Compute tne externalNullifierHash
+        uint256 externalNullifierHash = _computeExternalNullifierHash(appId, actionId);
 
         // @dev - Reverts if the zero-knowledge proof is invalid.
         worldIdRouter.verifyProof(
@@ -84,12 +104,17 @@ contract WorldIDV3BadgeManager {
      * @param proof The zero-knowledge proof
      */
     function verifyWorldIDV3Proof(
+        string memory appId,
+        string memory actionId,
         uint256 root,
         uint256 signalHash,
         uint256 nullifierHash,
         uint256 externalNullifierHash,
         uint256[8] calldata proof
     ) external view {
+        // @dev - Compute tne externalNullifierHash
+        uint256 externalNullifierHash = _computeExternalNullifierHash(appId, actionId);
+
         // @dev - Reverts if the zero-knowledge proof is invalid.
         worldIdRouter.verifyProof(
             root,
