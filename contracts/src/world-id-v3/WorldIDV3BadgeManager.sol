@@ -15,10 +15,11 @@ contract WorldIDV3BadgeManager {
     uint256 public constant GROUP_ID = 1; // Orb
 
 	/// @dev - The contract's external nullifier hash
-	uint256 internal immutable externalNullifier;
+	bytes internal externalNullifier;
+    uint256 internal externalNullifierHash;
     
     mapping(uint256 => bool) public nullifierHashes;
-    mapping (address => uint256) public nullifierHashesWithWalletAddresses;
+    mapping(address => uint256) public nullifierHashesWithWalletAddresses;
 
 	/// @param nullifierHash The nullifier hash for the verified proof
 	/// @dev A placeholder event that is emitted when a user successfully verifies with World ID
@@ -34,7 +35,8 @@ contract WorldIDV3BadgeManager {
      */
     constructor(IWorldID _worldIdRouter, string memory _appId, string memory _actionId) {
         worldIdRouter = _worldIdRouter;
-        externalNullifier = abi.encodePacked(abi.encodePacked(_appId).hashToField(), _actionId).hashToField();
+        externalNullifier = abi.encodePacked(abi.encodePacked(_appId).hashToField(), _actionId);
+        externalNullifierHash = externalNullifier.hashToField();
     }
 
     /*
@@ -49,7 +51,7 @@ contract WorldIDV3BadgeManager {
         uint256 root,
         uint256 signalHash,
         uint256 nullifierHash,
-        uint256 externalNullifierHash,
+        //uint256 externalNullifierHash,
         uint256[8] calldata proof
     ) external {
         if (nullifierHashes[nullifierHash]) revert InvalidNullifier();
