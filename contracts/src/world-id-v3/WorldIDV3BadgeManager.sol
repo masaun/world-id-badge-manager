@@ -2,22 +2,39 @@
 pragma solidity ^0.8.28;
 
 import { IWorldID } from "./world-id/interfaces/IWorldID.sol";
+import { ByteHasher } from './world-id/helpers/ByteHasher.sol';
 
 /**
  * @title - WorldIDV3BadgeManager contract
  */
 contract WorldIDV3BadgeManager {
+    using ByteHasher for bytes;
+
     IWorldID public immutable worldIdRouter;
 
     uint256 public constant GROUP_ID = 1; // Orb
+
+	/// @dev - The contract's external nullifier hash
+	uint256 internal immutable externalNullifier;
     
     mapping(uint256 => bool) public nullifierHashes;
     mapping (address => uint256) public nullifierHashesWithWalletAddresses;
+
+	/// @param nullifierHash The nullifier hash for the verified proof
+	/// @dev A placeholder event that is emitted when a user successfully verifies with World ID
+	event Verified(uint256 nullifierHash);
     
     error InvalidNullifier();
 
-    constructor(IWorldID _worldIdRouter) {
+    /*
+     * @notice - Constructor
+	 * @param _worldIdRouter - The WorldID router that will verify the proofs
+	 * @param _appId - The World ID's app ID
+	 * @param _actionId - The World ID's action ID
+     */
+    constructor(IWorldID _worldIdRouter, string memory _appId, string memory _actionId) {
         worldIdRouter = _worldIdRouter;
+        externalNullifier = abi.encodePacked(abi.encodePacked(_appId).hashToField(), _actionId).hashToField();
     }
 
     /*
