@@ -121,8 +121,8 @@ else
         forge script scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManager.s.sol:DeployWorldIDV3BadgeManager \
           --rpc-url world_chain_sepolia \
           --broadcast \
-          --verify \
-          --etherscan-api-key "$WORLD_CHAIN_SCAN_API_KEY" \
+          #--verify \
+          #--etherscan-api-key "$WORLD_CHAIN_SCAN_API_KEY" \
     else
         echo "Verification disabled (no WORLD_CHAIN_SCAN_API_KEY)"
         forge script scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManager.s.sol:DeployWorldIDV3BadgeManager \
