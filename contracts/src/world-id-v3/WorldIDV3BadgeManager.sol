@@ -22,13 +22,11 @@ contract WorldIDV3BadgeManager {
 
     /*
      * @notice - Verify a ZK Proof + Store the nullifier hash into the on-chain storage (= "nullifierHashes" storage) in order to prevent double-signaling. This function is a write function and requires a gas fee. 
-     * @dev - Note that a double-signaling check is not included here, and should be carried
-     * @param root The of the Merkle tree
-     * @param groupId The id of the Semaphore group
-     * @param signalHash A keccak256 hash of the Semaphore signal
-     * @param nullifierHash The nullifier hash
-     * @param externalNullifierHash A keccak256 hash of the external nullifier
-     * @param proof The zero-knowledge proof
+     * @param root - The root (returned by the IDKit widget).
+     * @param signal - An arbitrary input from the user, usually the user's wallet address
+     * @param nullifierHash - The nullifier for this proof, preventing double signaling (returned by the IDKit widget).
+     * @param externalNullifierHash - The keccak256 hash of the externalNullifier to verify. The externalNullifier is computed from the app_id and action.
+     * @param proof - The zero-knowledge proof that demonstrates the claimer is registered with World ID (returned by the IDKit widget).
      */
     function verifyWorldIDV3ProofAndStoreIntoOnChainStorage(
         uint256 root,
