@@ -52,6 +52,8 @@ contract WorldIDV3BadgeManager {
     ) internal view returns (uint256 _externalNullifierHash) {
         bytes memory externalNullifier = abi.encodePacked(abi.encodePacked(_appId).hashToField(), _actionId);
         uint256 externalNullifierHash = externalNullifier.hashToField();
+
+        return externalNullifierHash;
     }
 
     /*
