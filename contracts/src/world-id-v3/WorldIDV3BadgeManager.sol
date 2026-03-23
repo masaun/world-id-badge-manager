@@ -111,7 +111,7 @@ contract WorldIDV3BadgeManager {
         uint256 root,
         uint256 signalHash,
         uint256 nullifierHash,
-        uint256 externalNullifierHash,
+        //uint256 externalNullifierHash,
         uint256[8] calldata proof
     ) external view {
         // @dev - Compute tne externalNullifierHash
