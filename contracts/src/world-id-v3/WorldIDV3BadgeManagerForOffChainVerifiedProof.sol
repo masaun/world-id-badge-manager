@@ -1,5 +1,7 @@
-//SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
+
+import { DataTypes } from "./world-id/types/DataTypes.sol";
 
 /**
  * @title - WorldIDV3BadgeManager contract for the Off-chain verified proof
@@ -7,6 +9,9 @@ pragma solidity ^0.8.28;
 contract WorldIDV3BadgeManagerForOffChainVerifiedProof {
     mapping(uint256 => bool) public nullifierHashes;
     mapping(address => uint256) public nullifierHashesWithWalletAddresses;
+
+    // @dev - On-chain stroage for the WorldIDV3OffChainProofVerificationData of a given wallet adddress
+    mapping(address => DataTypes.WorldIDV3OffChainProofVerificationData) public worldIDV3OffChainProofVerificationDatas;
 
     error InvalidNullifier();
 
@@ -23,6 +28,7 @@ contract WorldIDV3BadgeManagerForOffChainVerifiedProof {
     function storeWorldIDV3Proof(
         string memory appId,
         string memory actionId,
+        string memory rpId,
         uint256 root,
         uint256 signalHash,
         uint256 nullifierHash,
