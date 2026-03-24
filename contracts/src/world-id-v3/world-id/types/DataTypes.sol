@@ -3,7 +3,7 @@ pragma solidity ^0.8.28;
 
 library DataTypes {
 
-    struct WorldIDV3OffChainProofVerificationData {
+    struct VerifiedWorldIDV3ProofData {
         uint256 appId;
         uint256 actionId;
         uint64 rpId;

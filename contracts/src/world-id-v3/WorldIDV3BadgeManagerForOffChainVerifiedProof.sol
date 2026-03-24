@@ -9,7 +9,7 @@ import { Errors } from "./world-id/types/Errors.sol";
  */
 contract WorldIDV3BadgeManagerForOffChainVerifiedProof {
     // @dev - On-chain stroage for the WorldIDV3OffChainProofVerificationData of a given wallet adddress
-    mapping(address => DataTypes.WorldIDV3OffChainProofVerificationData) public worldIDV3OffChainProofVerificationDatas;
+    mapping(address => DataTypes.VerifiedWorldIDV3ProofData) public verifiedWorldIDV3ProofDatas;
 
     /*
      * @notice - Constructor
@@ -33,17 +33,25 @@ contract WorldIDV3BadgeManagerForOffChainVerifiedProof {
         string memory protocolVersion  // "3.0"
     ) external {
         // @dev - Store a World ID v3 Proof-related data, which is verified off-chain, into the on-chain storage
-        DataTypes.WorldIDV3OffChainProofVerificationData storage worldIDV3OffChainProofVerificationData = worldIDV3OffChainProofVerificationDatas[msg.sender];
-        worldIDV3OffChainProofVerificationData.appId = appId;
-        worldIDV3OffChainProofVerificationData.rpId = rpId;
-        worldIDV3OffChainProofVerificationData.nonce = nonce;
-        worldIDV3OffChainProofVerificationData.identifier = identifier; // "orb"
-        worldIDV3OffChainProofVerificationData.merkleRoot = merkleRoot;
-        worldIDV3OffChainProofVerificationData.nullifier = nullifier;
-        worldIDV3OffChainProofVerificationData.proof = proof;
-        worldIDV3OffChainProofVerificationData.signalHash = signalHash;
-        worldIDV3OffChainProofVerificationData.environment = environment;         // "production"
-        worldIDV3OffChainProofVerificationData.protocolVersion = protocolVersion; // "3.0"
+        DataTypes.VerifiedWorldIDV3ProofData storage verifiedWorldIDV3ProofData = verifiedWorldIDV3ProofDatas[msg.sender];
+        verifiedWorldIDV3ProofData.appId = appId;
+        verifiedWorldIDV3ProofData.rpId = rpId;
+        verifiedWorldIDV3ProofData.nonce = nonce;
+        verifiedWorldIDV3ProofData.identifier = identifier; // "orb"
+        verifiedWorldIDV3ProofData.merkleRoot = merkleRoot;
+        verifiedWorldIDV3ProofData.nullifier = nullifier;
+        verifiedWorldIDV3ProofData.proof = proof;
+        verifiedWorldIDV3ProofData.signalHash = signalHash;
+        verifiedWorldIDV3ProofData.environment = environment;         // "production"
+        verifiedWorldIDV3ProofData.protocolVersion = protocolVersion; // "3.0"
+    }
+
+    /*
+     * @notice - Get a World ID v3 Proof-related data, which is verified off-chain, into the on-chain storage
+     */
+    function getVerifiedWorldIDV3ProofData(address walletAddress) external returns (DataTypes.VerifiedWorldIDV3ProofData memory _verifiedWorldIDV3ProofData) {
+        DataTypes.VerifiedWorldIDV3ProofData memory verifiedWorldIDV3ProofData = verifiedWorldIDV3ProofDatas[msg.sender];
+        return verifiedWorldIDV3ProofData;
     }
 
     /*
@@ -51,12 +59,12 @@ contract WorldIDV3BadgeManagerForOffChainVerifiedProof {
      * @dev - This function checks the following conditions:
      *        - If the nullifier is stored in the worldIDV3OffChainProofVerificationDatas storage for the wallet address, it returns true, indicating that the user has the World ID V3 Badge.  
      *        - If the nullifier is not stored in the worldIDV3OffChainProofVerificationDatas storage for the wallet address, it returns false, indicating that the user has not the World ID V3 Badge.  
-     * @param walletAddress The address to check
-     * @return _hasWorldIdV3Badge True if the address has World ID V3 Badge, false otherwise
+     * @param walletAddress - The address to check
+     * @return _hasWorldIdV3Badge - True if the address has World ID V3 Badge, false otherwise
      */
     function hasWorldIDV3Badge(address walletAddress) external view returns (bool _hasWorldIdV3Badge) {
-        DataTypes.WorldIDV3OffChainProofVerificationData memory worldIDV3OffChainProofVerificationData = worldIDV3OffChainProofVerificationDatas[walletAddress];
-        uint256 nullifier = worldIDV3OffChainProofVerificationData.nullifier;
+        DataTypes.VerifiedWorldIDV3ProofData memory verifiedWorldIDV3ProofData = verifiedWorldIDV3ProofDatas[walletAddress];
+        uint256 nullifier = verifiedWorldIDV3ProofData.nullifier;
         
         if (nullifier != 0) {
             return true;
