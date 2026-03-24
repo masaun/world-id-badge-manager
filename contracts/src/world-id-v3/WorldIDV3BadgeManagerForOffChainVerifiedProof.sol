@@ -2,6 +2,7 @@
 pragma solidity ^0.8.28;
 
 import { DataTypes } from "./world-id/types/DataTypes.sol";
+import { Errors } from "./world-id/types/Errors.sol";
 
 /**
  * @title - WorldIDV3BadgeManager contract for the Off-chain verified proof
@@ -13,8 +14,9 @@ contract WorldIDV3BadgeManagerForOffChainVerifiedProof {
     // @dev - On-chain stroage for the WorldIDV3OffChainProofVerificationData of a given wallet adddress
     mapping(address => DataTypes.WorldIDV3OffChainProofVerificationData) public worldIDV3OffChainProofVerificationDatas;
 
-    error InvalidNullifier();
-
+    /*
+     * @notice - Constructor
+     */
     constructor() {}
 
     /*
@@ -35,7 +37,7 @@ contract WorldIDV3BadgeManagerForOffChainVerifiedProof {
         //uint256 externalNullifierHash,
         uint256[8] calldata proof
     ) external {
-        if (nullifierHashes[nullifierHash]) revert InvalidNullifier();
+        if (nullifierHashes[nullifierHash]) revert Errors.InvalidNullifier();
 
         // @dev - Store the nullifier hash into the on-chain storage to prevent double-signaling.
         nullifierHashes[nullifierHash] = true;
