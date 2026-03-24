@@ -4,17 +4,17 @@ pragma solidity ^0.8.28;
 library DataTypes {
 
     struct WorldIDV3OffChainProofVerificationData {
-        string appId;
-        string actionId;
-        string rpId;
-        string nonce;
+        uint256 appId;
+        uint256 actionId;
+        uint64 rpId;
+        uint256 nonce;
         string identifier; // "orb"
-        string merkleRoot;
-        string nullifier;
+        uint256 merkleRoot;
+        uint256 nullifier;
         string proof;
-        string signalHash;
+        uint256 signalHash;
         string environment;      // "production"
-        string protocol_version; // "3.0"
+        string protocolVersion;  // "3.0"
     }
 
 }
