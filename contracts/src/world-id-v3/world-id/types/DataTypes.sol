@@ -4,9 +4,9 @@ pragma solidity ^0.8.28;
 library DataTypes {
 
     struct VerifiedWorldIDV3ProofData {
-        uint256 appId;
-        uint256 actionId;
-        uint64 rpId;
+        string appId;
+        string actionId;
+        string rpId;
         uint256 nonce;
         string identifier; // "orb"
         uint256 merkleRoot;
