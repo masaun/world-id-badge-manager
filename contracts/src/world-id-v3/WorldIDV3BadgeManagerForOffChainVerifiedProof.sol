@@ -20,9 +20,9 @@ contract WorldIDV3BadgeManagerForOffChainVerifiedProof {
      * @notice - Store a World ID v3 Proof-related data, which is verified off-chain, into the on-chain storage
      */
     function storeVerifiedWorldIDV3ProofData(
-        uint256 appId,
-        uint256 actionId,
-        uint64 rpId,
+        string memory appId,
+        string memory actionId,
+        string memory rpId,
         uint256 nonce,
         string memory identifier, // "orb"
         uint256 merkleRoot,
