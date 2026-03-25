@@ -8,6 +8,13 @@ sh scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManager.sh
 
 <br>
 
+```bash
+cd contracts
+sh scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManagerForOffChainVerifiedProof.sh
+```
+
+<br>
+
 ## SC `Deployment` Script on `BASE Testnet`
 
 ```bash

@@ -8,14 +8,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Parse arguments
-VERIFY_ONLY=false
-if [ "$1" = "--verify-only" ]; then
-    VERIFY_ONLY=true
-    shift
-fi
-
-WORLD_ID_ROUTER_ADDRESS=$1
-WORLD_ID_V3_BADGE_MANAGER_ADDRESS=$2
+WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIIN_VERIFIED_PROOF_ADDRESS=$2
 
 # Get the contracts root directory (3 levels up from this script)
 CONTRACTS_ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
@@ -54,25 +47,20 @@ if [ "$VERIFY_ONLY" = true ]; then
     fi
 
     # Get addresses interactively if not provided
-    if [ -z "$WORLD_ID_ROUTER_ADDRESS" ]; then
-        echo -e "${YELLOW}Enter World ID Router contract address:${NC}"
-        read WORLD_ID_ROUTER_ADDRESS
-    fi
-
-    if [ -z "$WORLD_ID_V3_BADGE_MANAGER_ADDRESS" ]; then
+    if [ -z "$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIIN_VERIFIED_PROOF_ADDRESS" ]; then
         echo -e "${YELLOW}Enter World ID V3 Badge Manager contract address:${NC}"
         read WORLD_ID_V3_BADGE_MANAGER_ADDRESS
     fi
 
     echo ""
-    echo -e "${YELLOW}Verifying World ID V3 Badge Manager at $WORLD_ID_V3_BADGE_MANAGER_ADDRESS...${NC}"
+    echo -e "${YELLOW}Verifying World ID V3 Badge Manager at $WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIIN_VERIFIED_PROOF_ADDRESS...${NC}"
     forge verify-contract \
       --rpc-url world_chain_sepolia \
       --etherscan-api-key "$WORLD_CHAIN_SCAN_API_KEY" \
       --verifier-url https://api-sepolia.worldchain.scan.io/api \
-      "$WORLD_ID_V3_BADGE_MANAGER_ADDRESS" \
-      src/world-id-v3/WorldIDV3BadgeManager.sol:WorldIDV3BadgeManager \
-      || echo -e "${YELLOW}WorldIDV3BadgeManager verification failed or already verified${NC}"
+      "$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIIN_VERIFIED_PROOF_ADDRESS" \
+      src/world-id-v3/WorldIDV3BadgeManagerForOffChainVerifiedProof.sol:WorldIDV3BadgeManagerForOffChainVerifiedProof \
+      || echo -e "${YELLOW}WorldIDV3BadgeManagerForOffChainVerifiedProof verification failed or already verified${NC}"
 
     echo ""
 
@@ -82,8 +70,7 @@ if [ "$VERIFY_ONLY" = true ]; then
     echo -e "${GREEN}====================================${NC}"
     echo ""
     echo "Check contracts on World Chain Scan:"
-    echo "World ID Router: https://sepolia.worldscan.org/address/$WORLD_ID_ROUTER_ADDRESS"
-    echo "World ID V3 Badge Manager: https://sepolia.worldscan.org/address/$WORLD_ID_V3_BADGE_MANAGER_ADDRESS"
+    echo "World ID V3 Badge Manager: https://sepolia.worldscan.org/address/$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIIN_VERIFIED_PROOF_ADDRESS"
 
 else
     # ============================================
@@ -114,14 +101,14 @@ else
     # Deploy with or without verification
     if [ -n "$WORLD_CHAIN_SCAN_API_KEY" ]; then
         echo "Verification enabled"
-        forge script scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManager.s.sol:DeployWorldIDV3BadgeManager \
+        forge script scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManagerForOffChainVerifiedProof.s.sol:DeployWorldIDV3BadgeManagerForOffChainVerifiedProof \
           --rpc-url world_chain_sepolia \
           --broadcast \
           --verify \
           --etherscan-api-key "$WORLD_CHAIN_SCAN_API_KEY"
     else
         echo "Verification disabled (no WORLD_CHAIN_SCAN_API_KEY)"
-        forge script scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManager.s.sol:DeployWorldIDV3BadgeManager \
+        forge script scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManagerForOffChainVerifiedProof.s.sol:DeployWorldIDV3BadgeManagerForOffChainVerifiedProof \
           --rpc-url world_chain_sepolia \
           --broadcast
     fi
