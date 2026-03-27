@@ -8,7 +8,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Parse arguments
-WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIIN_VERIFIED_PROOF_ADDRESS=$2
+WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIN_VERIFIED_PROOF_ADDRESS=$2
 
 # Get the contracts root directory (3 levels up from this script)
 CONTRACTS_ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
@@ -47,18 +47,18 @@ if [ "$VERIFY_ONLY" = true ]; then
     fi
 
     # Get addresses interactively if not provided
-    if [ -z "$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIIN_VERIFIED_PROOF_ADDRESS" ]; then
+    if [ -z "$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIN_VERIFIED_PROOF_ADDRESS" ]; then
         echo -e "${YELLOW}Enter World ID V3 Badge Manager contract address:${NC}"
         read WORLD_ID_V3_BADGE_MANAGER_ADDRESS
     fi
 
     echo ""
-    echo -e "${YELLOW}Verifying World ID V3 Badge Manager at $WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIIN_VERIFIED_PROOF_ADDRESS...${NC}"
+    echo -e "${YELLOW}Verifying World ID V3 Badge Manager at $WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIN_VERIFIED_PROOF_ADDRESS...${NC}"
     forge verify-contract \
       --rpc-url world_chain_mainnet \
       --etherscan-api-key "$WORLD_CHAIN_SCAN_API_KEY" \
       --verifier-url https://api-worldchain.scan.io/api \
-      "$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIIN_VERIFIED_PROOF_ADDRESS" \
+      "$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIN_VERIFIED_PROOF_ADDRESS" \
       src/world-id-v3/WorldIDV3BadgeManagerForOffChainVerifiedProof.sol:WorldIDV3BadgeManagerForOffChainVerifiedProof \
       || echo -e "${YELLOW}WorldIDV3BadgeManagerForOffChainVerifiedProof verification failed or already verified${NC}"
 
@@ -70,7 +70,7 @@ if [ "$VERIFY_ONLY" = true ]; then
     echo -e "${GREEN}====================================${NC}"
     echo ""
     echo "Check contracts on World Chain Scan:"
-    echo "World ID V3 Badge Manager: https://worldscan.org/address/$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIIN_VERIFIED_PROOF_ADDRESS"
+    echo "World ID V3 Badge Manager: https://worldscan.org/address/$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIN_VERIFIED_PROOF_ADDRESS"
 
 else
     # ============================================
