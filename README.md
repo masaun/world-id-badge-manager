@@ -57,7 +57,6 @@ This is the World ID Badge Manager contract, which:
 
 - Deploy the `WorldIDV3BadgeManagerForOffChainVerifiedProof.sol` on `World Chain - Sepolia Testnet`
 ```bash
-```bash
 cd contracts
 sh scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManagerForOffChainVerifiedProof.sh
 ```
