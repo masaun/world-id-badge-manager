@@ -15,6 +15,15 @@ sh scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManagerForOffChai
 
 <br>
 
+## SC `Deployment` Script on `World Chain - Mainnet`
+
+```bash
+cd contracts
+sh scripts/world-chain-mainnet/deployments/DeployWorldIDV3BadgeManagerForOffChainVerifiedProof.sh
+```
+
+<br>
+
 ## SC `Deployment` Script on `BASE Testnet`
 
 ```bash

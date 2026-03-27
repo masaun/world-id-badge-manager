@@ -30,7 +30,7 @@ if [ "$VERIFY_ONLY" = true ]; then
     # VERIFICATION ONLY MODE
     # ============================================
     echo -e "${GREEN}====================================${NC}"
-    echo -e "${GREEN}Verifying Contracts on World Chain Scan (on World Chain Sepolia) ${NC}"
+    echo -e "${GREEN}Verifying Contracts on World Chain Scan (on World Chain Mainnet) ${NC}"
     echo -e "${GREEN}====================================${NC}"
     echo ""
 
@@ -41,8 +41,8 @@ if [ "$VERIFY_ONLY" = true ]; then
         exit 1
     fi
 
-    if [ -z "$WORLD_CHAIN_SEPOLIA_RPC_URL" ]; then
-        echo -e "${RED}Error: WORLD_CHAIN_SEPOLIA_RPC_URL not set in .env${NC}"
+    if [ -z "$WORLD_CHAIN_MAINNET_RPC_URL" ]; then
+        echo -e "${RED}Error: world_chain_mainnet_RPC_URL not set in .env${NC}"
         exit 1
     fi
 
@@ -55,9 +55,9 @@ if [ "$VERIFY_ONLY" = true ]; then
     echo ""
     echo -e "${YELLOW}Verifying World ID V3 Badge Manager at $WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIN_VERIFIED_PROOF_ADDRESS...${NC}"
     forge verify-contract \
-      --rpc-url world_chain_sepolia \
+      --rpc-url world_chain_mainnet \
       --etherscan-api-key "$WORLD_CHAIN_SCAN_API_KEY" \
-      --verifier-url https://api-sepolia.worldchain.scan.io/api \
+      --verifier-url https://api-worldchain.scan.io/api \
       "$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIN_VERIFIED_PROOF_ADDRESS" \
       src/world-id-v3/WorldIDV3BadgeManagerForOffChainVerifiedProof.sol:WorldIDV3BadgeManagerForOffChainVerifiedProof \
       || echo -e "${YELLOW}WorldIDV3BadgeManagerForOffChainVerifiedProof verification failed or already verified${NC}"
@@ -70,25 +70,25 @@ if [ "$VERIFY_ONLY" = true ]; then
     echo -e "${GREEN}====================================${NC}"
     echo ""
     echo "Check contracts on World Chain Scan:"
-    echo "World ID V3 Badge Manager: https://sepolia.worldscan.org/address/$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIN_VERIFIED_PROOF_ADDRESS"
+    echo "World ID V3 Badge Manager: https://worldscan.org/address/$WORLD_ID_V3_BADGE_MANAGER_FOR_OFFCHAIN_VERIFIED_PROOF_ADDRESS"
 
 else
     # ============================================
     # DEPLOYMENT MODE
     # ============================================
     echo -e "${GREEN}====================================${NC}"
-    echo -e "${GREEN}Deploying to World Chain Sepolia${NC}"
+    echo -e "${GREEN}Deploying to World Chain Mainnet${NC}"
     echo -e "${GREEN}====================================${NC}"
     echo ""
 
     # Validate required variables
-    if [ -z "$WORLD_CHAIN_SEPOLIA_PRIVATE_KEY" ]; then
-        echo -e "${RED}Error: WORLD_CHAIN_SEPOLIA_PRIVATE_KEY not set in .env${NC}"
+    if [ -z "$WORLD_CHAIN_MAINNET_PRIVATE_KEY" ]; then
+        echo -e "${RED}Error: world_chain_mainnet_PRIVATE_KEY not set in .env${NC}"
         exit 1
     fi
 
-    if [ -z "$WORLD_CHAIN_SEPOLIA_RPC_URL" ]; then
-        echo -e "${RED}Error: WORLD_CHAIN_SEPOLIA_RPC_URL not set in .env${NC}"
+    if [ -z "$WORLD_CHAIN_MAINNET_RPC_URL" ]; then
+        echo -e "${RED}Error: world_chain_mainnet_RPC_URL not set in .env${NC}"
         exit 1
     fi
 
@@ -101,15 +101,15 @@ else
     # Deploy with or without verification
     if [ -n "$WORLD_CHAIN_SCAN_API_KEY" ]; then
         echo "Verification enabled"
-        forge script scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManagerForOffChainVerifiedProof.s.sol:DeployWorldIDV3BadgeManagerForOffChainVerifiedProof \
-          --rpc-url world_chain_sepolia \
+        forge script scripts/world-chain-mainnet/deployments/DeployWorldIDV3BadgeManagerForOffChainVerifiedProof.s.sol:DeployWorldIDV3BadgeManagerForOffChainVerifiedProof \
+          --rpc-url world_chain_mainnet \
           --broadcast \
           --verify \
           --etherscan-api-key "$WORLD_CHAIN_SCAN_API_KEY"
     else
         echo "Verification disabled (no WORLD_CHAIN_SCAN_API_KEY)"
-        forge script scripts/world-chain-sepolia/deployments/DeployWorldIDV3BadgeManagerForOffChainVerifiedProof.s.sol:DeployWorldIDV3BadgeManagerForOffChainVerifiedProof \
-          --rpc-url world_chain_sepolia \
+        forge script scripts/world-chain-mainnet/deployments/DeployWorldIDV3BadgeManagerForOffChainVerifiedProof.s.sol:DeployWorldIDV3BadgeManagerForOffChainVerifiedProof \
+          --rpc-url world_chain_mainnet \
           --broadcast
     fi
 
@@ -119,7 +119,7 @@ else
     echo -e "${GREEN}====================================${NC}"
     echo ""
     echo "Check the output above for deployed contract addresses"
-    echo "You can view them on World Chain Scan: https://sepolia.worldscan.org/"
+    echo "You can view them on World Chain Scan: https://worldscan.org/"
     
     if [ -z "$WORLD_CHAIN_SCAN_API_KEY" ]; then
         echo ""
